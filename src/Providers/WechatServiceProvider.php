@@ -10,8 +10,11 @@ declare(strict_types = 1);
 
 namespace Firstphp\Fpwechat\Providers;
 
+use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\Config;
+use Firstphp\Fpwechat\Services\WechatService;
 
-class WechatServiceProvider
+class WechatServiceProvider extends ServiceProvider
 {
 
     protected $defer = false;

@@ -71,10 +71,10 @@ class Http
 
     /**
      * @param string $name
-     * @param string $arguments
+     * @param array $arguments
      * @return mixed
      */
-    public function __call(string $name, string $arguments)
+    public function __call(string $name, array $arguments)
     {
         if ($this->componentToken) {
             $arguments[0] .= (stripos($arguments[0], '?') ? '&' : '?') . 'component_access_token=' . $this->componentToken;
