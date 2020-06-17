@@ -8,7 +8,7 @@ declare(strict_types = 1);
  * Time: 10:24 AM
  */
 
-namespace Firstphp\Wechat\Bridge;
+namespace Firstphp\Fpwechat\Bridge;
 
 use GuzzleHttp\Client;
 

@@ -8,7 +8,7 @@ declare(strict_types = 1);
  * Time: 11:09 AM
  */
 
-namespace Firstphp\Wechat\Providers;
+namespace Firstphp\Fpwechat\Providers;
 
 
 class WechatServiceProvider

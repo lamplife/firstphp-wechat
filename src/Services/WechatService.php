@@ -8,9 +8,9 @@ declare(strict_types = 1);
  * Time: 10:22 AM
  */
 
-namespace Firstphp\Wechat\Services;
+namespace Firstphp\Fpwechat\Services;
 
-use Firstphp\Wechat\Bridge\Http;
+use Firstphp\Fpwechat\Bridge\Http;
 
 
 class WechatService

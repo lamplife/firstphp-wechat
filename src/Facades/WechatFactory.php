@@ -8,7 +8,7 @@ declare(strict_types = 1);
  * Time: 11:06 AM
  */
 
-namespace Firstphp\Wechat\Facades;
+namespace Firstphp\Fpwechat\Facades;
 
 use Illuminate\Support\Facades\Facade;
 
