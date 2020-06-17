@@ -18,7 +18,7 @@ class Http
     /**
      * base uri
      */
-    const BASE_URI = 'https://api.weixin.qq.com/';
+    const BASE_URI = 'https://api.weixin.qq.com';
 
     protected $client;
     protected $componentToken;
@@ -90,9 +90,11 @@ class Http
         }
 
         $response = json_decode($this->client->$name($arguments[0], $arguments[1])->getBody()->getContents(), true);
+
         if (isset($response['errcode']) && $response['errcode'] != 0) {
             return $response;
         }
+
         return $response;
     }
 

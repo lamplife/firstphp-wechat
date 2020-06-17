@@ -50,7 +50,7 @@ class WechatServiceProvider extends ServiceProvider
     {
         $this->app->singleton('WechatService', function () {
             $config = Config::get('wechat');
-            return new WechatService($config['appid'], $config['appsecret']);
+            return new WechatService($config['appid'], $config['appsecret'], $config['token'], $config['encoding_aes_key']);
         });
     }
 
