@@ -1,9 +1,9 @@
 {
   "name": "firstphp/fpwechat",
-  "description": "微信小程序开发",
+  "description": "微信公众号开发",
   "type": "library",
   "license": "MIT",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "authors": [
     {
       "name": "狂奔的蚂蚁",

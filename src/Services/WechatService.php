@@ -85,12 +85,10 @@ class WechatService
      * @param array $data
      * @return mixed
      */
-    public function sendMessage(string $accessToken, array $data)
+    public function sendTemplateMessage(string $accessToken, array $data)
     {
-        return $this->http->post("cgi-bin/message/template/send", [
-            'query' => [
-                'access_token' => $accessToken
-            ]
+        return $this->http->post("cgi-bin/message/template/send?access_token=".$accessToken, [
+            'json' => $data
         ]);
     }
 
@@ -102,7 +100,7 @@ class WechatService
      * @param array $message
      * @return mixed
      */
-    public function customSend(string $accessToken, $message)
+    public function customSend(string $accessToken, array $message)
     {
         $url = "https://api.weixin.qq.com/cgi-bin/message/custom/send?access_token=" . $accessToken;
         $curl = curl_init();
@@ -140,7 +138,6 @@ class WechatService
     }
 
 
-
     /**
      * 获取用户信息
      *
@@ -163,6 +160,7 @@ class WechatService
 
     /**
      * xml 转 array
+     *
      * @param string $xml
      * @return mixed
      */

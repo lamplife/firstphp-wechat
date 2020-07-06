@@ -24,7 +24,7 @@ class Prpcrypt
     /**
      * @param string $k
      */
-    function Prpcrypt(string $k)
+    function Prpcrypt($k)
     {
         $this->key = base64_decode($k . "=");
     }
@@ -37,7 +37,7 @@ class Prpcrypt
      * @param string $appid 加密后的密文
      * @return array
      */
-    public function encrypt(string $text, string $appid)
+    public function encrypt($text, $appid)
     {
 
         try {
@@ -72,7 +72,7 @@ class Prpcrypt
      * @param string $appid 解密得到的明文
      * @return array|string
      */
-    public function decrypt(string $encrypted, string $appid)
+    public function decrypt($encrypted, $appid)
     {
         try {
             //使用BASE64对需要解密的字符串进行解码
@@ -102,7 +102,6 @@ class Prpcrypt
             $xml_content = substr($content, 4, $xml_len);
             $from_appid = substr($content, $xml_len + 4);
         } catch (\Exception $e) {
-            //print $e;
             return array(ErrorCode::$IllegalBuffer, null);
         }
         if ($from_appid != $appid)

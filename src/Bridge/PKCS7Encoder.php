@@ -27,7 +27,7 @@ class PKCS7Encoder
      * @param string $text 需要进行填充补位操作的明文
      * @return string
      */
-    function encode(string $text)
+    function encode($text)
     {
         $block_size = PKCS7Encoder::$block_size;
         $text_length = strlen($text);
@@ -52,13 +52,14 @@ class PKCS7Encoder
      * @param string $text 解密后的明文
      * @return string 删除填充补位后的明文
      */
-    function decode(string $text)
+    function decode($text)
     {
-
-        $pad = ord(substr($text, -1));
-        if ($pad < 1 || $pad > 32) {
-            $pad = 0;
+        if ($text) {
+            $pad = ord(substr($text, -1));
+            if ($pad < 1 || $pad > 32) {
+                $pad = 0;
+            }
+            return substr($text, 0, (strlen($text) - $pad));
         }
-        return substr($text, 0, (strlen($text) - $pad));
     }
 }

@@ -172,6 +172,11 @@ class MsgCrypt {
             $pkc_encoder = new PKCS7Encoder;
             $result = $pkc_encoder->decode($decrypted);
 
+            // 容错
+            if (empty($result)) {
+                return "";
+            }
+
             //去除16位随机字符串,网络字节序和AppId
             if (strlen($result) < 16) {
                 return "";
@@ -274,7 +279,7 @@ class MsgCrypt {
             $array_e = $xml->getElementsByTagName('Encrypt');
             $encrypt = $array_e->item(0)->nodeValue;
             return [static::OK, $encrypt];
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             return [static::PARSE_XML_ERROR, null];
         }
     }
@@ -306,7 +311,6 @@ class MsgCrypt {
      */
     function getRandomStr()
     {
-
         $str = "";
         $str_pol = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789abcdefghijklmnopqrstuvwxyz";
         $max = strlen($str_pol) - 1;
