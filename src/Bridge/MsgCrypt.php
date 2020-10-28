@@ -17,6 +17,7 @@ class MsgCrypt {
     protected $encodingAesKey;
     protected $appId;
     protected $k;
+    protected $iv;
 
     const BLOCK_SIZE = 32;
 
@@ -46,6 +47,7 @@ class MsgCrypt {
         $this->encodingAesKey = $encodingAesKey;
         $this->appId = $appId;
         $this->key = base64_decode($encodingAesKey . "=");
+        $this->iv = substr($this->key, 0, 16);
     }
 
     /**
@@ -112,7 +114,7 @@ class MsgCrypt {
      * @param string $postData
      * @return array|bool|string
      */
-    public function decryptMsg(string $signature = '', string $timestamp = '', string $nonce = '', string $postData = '')
+    public function decryptMsg($signature = '', $timestamp = '', $nonce = '', $postData = '')
     {
         if (strlen($this->encodingAesKey) != 43) {
             return [static::ILLEGAL_AES_KEY, null];
@@ -137,6 +139,7 @@ class MsgCrypt {
         if ($array[0] != 0) {
             return $array;
         }
+
         $checkSignature = $array[1];
         if ($signature != $checkSignature) {
             return [static::VALIDATE_SIGNATURE_ERROR, null];
@@ -144,11 +147,14 @@ class MsgCrypt {
 
         $result = $this->decrypt($encrypt, $this->appId);
 
-        if ($result[0] != 0) {
-            return $result;
-        }
+        return $result;
 
+        /**
+        if (isset($result[0]) && $result[0] != 0) {
+        return $result;
+        }
         return [static::OK, $result[1]];
+         **/
     }
 
 
@@ -160,9 +166,12 @@ class MsgCrypt {
     public function decrypt($encrypted, $appid)
     {
         try {
-            $iv = substr($this->key, 0, 16);
-            //使用BASE64对需要解密的字符串进行解码
-            $decrypted = openssl_decrypt(base64_decode($encrypted), 'AES-256-CBC', $this->key, OPENSSL_RAW_DATA, $iv);
+            //解密
+            if (function_exists('openssl_decrypt')) {
+                $decrypted = openssl_decrypt($encrypted, 'AES-256-CBC', $this->key, OPENSSL_ZERO_PADDING, $this->iv);
+            } else {
+                $decrypted = mcrypt_decrypt(MCRYPT_RIJNDAEL_128, $this->key, base64_decode($encrypted), MCRYPT_MODE_CBC, $this->iv);
+            }
         } catch (\Exception $e) {
             return array(ErrorCode::$DecryptAESError, null);
         }
